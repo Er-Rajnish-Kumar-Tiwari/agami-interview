@@ -1,4 +1,4 @@
-import express from "express";
+const express=require("express");
 import { registerUser } from "../Controlls/userController";
 import { addConference, getConferences } from "../Controlls/conferenceController";
 import { addFeedback } from "../Controlls/feedbackController";

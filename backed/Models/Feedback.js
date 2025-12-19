@@ -1,3 +1,3 @@
-import mongoose from "mongoose";
+const { mongoose } = require("mongoose");
 
-export default mongoose.model("Feedback",new mongoose.Schema({message:String}));
+module.exports = mongoose.model("Feedback",new mongoose.Schema({message:String}));
