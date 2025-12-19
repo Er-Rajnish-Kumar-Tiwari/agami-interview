@@ -1,7 +1,8 @@
+const  { addConference, getConferences }  = require("../Controlls/conferenceController");
+const { addFeedback } = require("../Controlls/feedbackController");
+const { registerUser } = require("../Controlls/userController");
+
 const express=require("express");
-import { registerUser } from "../Controlls/userController";
-import { addConference, getConferences } from "../Controlls/conferenceController";
-import { addFeedback } from "../Controlls/feedbackController";
 
 const router=express.Router();
 router.post("/register",registerUser);

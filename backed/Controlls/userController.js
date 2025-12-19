@@ -1,6 +1,8 @@
-import User from "../Models/User"
+const User = require("../Models/User");
 
-export const registerUser=async(req,res)=>{
+ const registerUser=async(req,res)=>{
     const user=await User.create(req.body);
     res.json(user);
 };
+
+module.exports={registerUser};

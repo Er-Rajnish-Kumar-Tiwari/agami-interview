@@ -1,6 +1,8 @@
-import Feedback from "../Models/Feedback";
+const Feedback = require("../Models/Feedback");
 
-export const addFeedback=async(req,res)=>{
+ const addFeedback=async(req,res)=>{
     const feedback=await Feedback.create(req.body);
     res.json(feedback);
 };
+
+module.exports={addFeedback};
