@@ -3,6 +3,7 @@ const mongoose=require("mongoose");
 const cors=require("cors");
 const dbConnection = require("./Config/db.js");
 const connectedCloudinary = require("./Config/cloudnary.js");
+const { default: router } = require("./Routes/routes.js");
 require("dotenv").config();
 
 
@@ -12,9 +13,7 @@ app.use(cors());
 dbConnection();
 connectedCloudinary();
 
-app.get("/", (req,res)=>{
-    console.log("Server is running");
-    res.send("Server is running");
-});
+app.use("",router);
+
  
 app.listen(process.env.PORT);
