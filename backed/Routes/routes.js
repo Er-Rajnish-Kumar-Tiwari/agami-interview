@@ -10,4 +10,4 @@ router.post("/conference",addConference);
 router.get("/conferences",getConferences);
 router.post("/feedback",addFeedback);
 
-export default router;
+exports.default=router;

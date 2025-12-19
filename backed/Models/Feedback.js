@@ -1,3 +1,3 @@
-const { mongoose } = require("mongoose");
+const {mongoose}=require("mongoose");
 
-module.exports = mongoose.model("Feedback",new mongoose.Schema({message:String}));
+module.exports= mongoose.model("Feedback",new mongoose.Schema({message:String}));
