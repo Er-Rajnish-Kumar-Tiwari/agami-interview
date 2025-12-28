@@ -15,7 +15,10 @@ const aiRewrite = require("../Services/aiService");
 
     const links = await googleSearch(article.title);
 
-    if (links.length < 2) continue;
+      if (links.length < 2) {
+    console.log("⚠️ Not enough links, skipping:", article.title);
+    continue;
+  }
 
     const ref1 = await scrapeArticle(links[0]);
     const ref2 = await scrapeArticle(links[1]);
