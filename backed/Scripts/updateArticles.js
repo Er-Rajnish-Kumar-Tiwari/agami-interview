@@ -7,7 +7,7 @@ const aiRewrite = require("../Services/aiService");
 
 (async () => {
   const { data: articles } = await axios.get(
-    "http://localhost:5000/api/articles"
+    "https://agami-interview-backend.onrender.com/api/articles"
   );
 
   for (let article of articles) {
@@ -27,7 +27,7 @@ const aiRewrite = require("../Services/aiService");
     );
 
     await axios.put(
-      `http://localhost:5000/api/articles/${article._id}`,
+      `https://agami-interview-backend.onrender.com/api/articles/${article._id}`,
       {
         updatedContent,
         references: links
