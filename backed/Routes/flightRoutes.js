@@ -4,19 +4,20 @@ const Flight = require("../Models/FlightCache");
 
 const router = express.Router();
 
+// GET /api/flights?airport=BOM&date=2026-05-20&type=departure
 router.get("/flights", async (req, res) => {
-  const { iataCode, type, date } = req.query;
+  const { airport, date, type = "departure" } = req.query;
 
   //  Validation
-  if (!iataCode || !type || !date) {
+  if (!airport || !date) {
     return res.status(400).json({
-      message: "iataCode, type, date are required",
+      message: "airport and date are required",
     });
   }
 
   try {
-    //  Check cache
-    const cached = await Flight.findOne({ iataCode, type, date });
+    //  Check Cache
+    const cached = await Flight.findOne({ airport, date, type });
 
     if (cached) {
       return res.json({
@@ -25,34 +26,46 @@ router.get("/flights", async (req, res) => {
       });
     }
 
-    //  API Call
+    // API Call
     const response = await axios.get(
-      "http://api.aviationstack.com/v1/flightsFuture",
+      "http://api.aviationstack.com/v1/flights",
       {
         params: {
-          access_key: "35bc4495afcaabb850766651a829ca4d", 
-          dep_iata: type === "departure" ? iataCode : undefined,
-          arr_iata: type === "arrival" ? iataCode : undefined,
+          access_key: "35bc4495afcaabb850766651a829ca4d",
+          dep_iata: type === "departure" ? airport : undefined,
+          arr_iata: type === "arrival" ? airport : undefined,
           flight_date: date,
         },
       }
     );
 
-    //  Save in DB (cache)
+    // Process Data (important for frontend)
+    const flights = response.data.data.map((flight) => ({
+      airline: flight.airline?.name,
+      flight_number: flight.flight?.iata,
+      departure_airport: flight.departure?.airport,
+      arrival_airport: flight.arrival?.airport,
+      departure_time: flight.departure?.scheduled,
+      arrival_time: flight.arrival?.scheduled,
+      status: flight.flight_status,
+    }));
+
+    //  Save in Cache
     await Flight.create({
-      iataCode,
+      airport,
       type,
       date,
-      data: response.data,
+      data: flights,
     });
 
+    // Response
     res.json({
       source: "api",
-      data: response.data,
+      results: flights,
     });
 
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(500).json({
       error: "Server Error",
     });

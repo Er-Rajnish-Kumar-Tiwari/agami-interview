@@ -13,6 +13,6 @@ app.use(express.json());
 
 app.use("/api", require("./Routes/flightRoutes"));
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+app.listen(2000, () => {
+  console.log("Server running on port 2000");
 });

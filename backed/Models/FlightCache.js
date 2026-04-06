@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
 
 const flightSchema = new mongoose.Schema({
-  iataCode: String,
+  airport: String,
   type: String,
   date: String,
   data: Object,
+
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 3600, // Expires in 1 hour cache
+    expires: 3600, // 1 hour cache
   },
 });
 
