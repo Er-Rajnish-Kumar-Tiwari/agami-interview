@@ -31,7 +31,7 @@ router.get("/flights", async (req, res) => {
       "http://api.aviationstack.com/v1/flights",
       {
         params: {
-          access_key: "35bc4495afcaabb850766651a829ca4d",
+          access_key: process.env.API_KEY,
           dep_iata: type === "departure" ? airport : undefined,
           arr_iata: type === "arrival" ? airport : undefined,
           flight_date: date,
